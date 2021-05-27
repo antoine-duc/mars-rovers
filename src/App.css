@@ -1,0 +1,57 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.roversInput {
+  width: 600px;
+  height: 300px;
+  max-width: 100%;
+  margin-bottom: 30px;
+  max-height: 30vh;
+  font-size: 1em;
+  padding: 8px;
+}
+
+.roversInput.error {
+  border: 2px solid red;
+}
+
+.ctaMoveRovers {
+  height: 42px;
+  background: #0464aa;
+  padding: 10px 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.outputMessage {
+  margin-top: 50px;
+  background: #fafafa;
+  width: 600px;
+  font-size: 1em;
+  padding: 12px;
+}
+
+.roverInfo {
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+}
+
+.roverInfo div:first-child {
+  width: 120px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+}
