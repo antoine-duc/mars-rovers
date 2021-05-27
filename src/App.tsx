@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { checkPosAndDirection, checkSequence, directions, movesByDirection } from './utils';
 import './App.css';
 
 type Rover = {
@@ -10,13 +11,7 @@ type Rover = {
 type Direction = 'N' | 'E' | 'S' | 'W';
 
 function App() {
-  const directions = ['N', 'E', 'S', 'W'];
-  const movesByDirection = {
-    N: [0, 1],
-    E: [1, 0],
-    S: [0, -1],
-    W: [-1, 0]
-  };
+  
   let gridDimensions : [number, number]; // first entry is grid width, second one is height
 
   const [roversInfos, setRoversInfos] = useState<Rover[]>([]);
@@ -46,14 +41,6 @@ function App() {
     } 
   };
 
-  const checkPosAndDirection = (x: number, y: number, direction: string) : boolean => {
-    return !isNaN(x) && x >= 0 && x <= gridDimensions[0] && !isNaN(y) && y >= 0 && y <= gridDimensions[1] && directions.includes(direction);
-  };
-  
-  const checkSequence = (sequence: string) : boolean => {
-    return !sequence.replace(/M|L|R/g, '').trim().length;
-  };
-
   // parse toutes les lignes à partir de la 2ème et récupère les coordonnées et séquences de déplacement
   const getRoversInfos = (lines: string[]) : Rover[] => {
     if (lines.length >= 2 && lines.length % 2 === 0) {
@@ -68,7 +55,7 @@ function App() {
         // sequence de déplacement (ligne suivante)
         let sequence = lines[i+1].toUpperCase().replace(/\s+/g, '');
 
-        if (checkPosAndDirection(startX, startY, startDirection) && checkSequence(sequence)) {
+        if (checkPosAndDirection(startX, startY, startDirection, gridDimensions) && checkSequence(sequence)) {
           rovers.push({
             position: [startX, startY],
             direction: startDirection as Direction,
@@ -121,7 +108,7 @@ function App() {
       } else if (seq === 'M') {
         let newX = rover.position[0] + movesByDirection[rover.direction][0];
         let newY =  rover.position[1] + movesByDirection[rover.direction][1];
-        if (checkPosAndDirection(newX, newY, rover.direction)) {
+        if (checkPosAndDirection(newX, newY, rover.direction, gridDimensions)) {
           rover.position = [newX, newY];
         } else {
           throw Error('Le Rover est tombé dans un précipice :(');
